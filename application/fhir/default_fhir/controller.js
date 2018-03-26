@@ -3324,7 +3324,7 @@ var controller = {
 			encounterTypeCode: function getEncounterTypeCode(req, res){
 				var ipAddres = req.connection.remoteAddress;
 				var apikey = req.params.apikey;
-				var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+				var code = req.params.code.replace("/","<or>").trim().toLowerCase();
 
 				if(code == "" || typeof code == 'undefined'){
 					res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -6090,8 +6090,8 @@ var controller = {
 				var ipAddres = req.connection.remoteAddress;
 				var apikey = req.params.apikey;
 				
-				var code = req.body.code.trim().toLowerCase().replace(/[^\w\s ,]/gi, '');
-				var display = req.body.display.replace(/[^\w\s ,]/gi, '');
+				var code = req.body.code.trim().toLowerCase().replace("/", "<or>");
+				var display = req.body.display;
 				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
 				
 				var err_code = 0;
@@ -9272,7 +9272,7 @@ var controller = {
 				var dataEncounterType = {};
 
 				if(typeof req.body.code !== 'undefined'){
-					var code = req.body.code.trim().toLowerCase();
+					var code = req.body.code.trim().toLowerCase().replace("/","<or>");
 					dataEncounterType.code = code;
 				}
 

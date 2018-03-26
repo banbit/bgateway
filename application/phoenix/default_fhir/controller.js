@@ -13,8 +13,8 @@ var port = configYaml.phoenix.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
-//var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
-var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+//var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
 
 var controller = {
 	get: {
@@ -1359,7 +1359,7 @@ var controller = {
       });
     },
     encounterTypeCode: function getEncounterTypeCode(req, res){
-      code = req.params.code;
+      code = req.params.code.replace("<or>","/");
 
       var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENCOUNTER_TYPE WHERE code = '" + code + "' ";
       
@@ -2193,7 +2193,8 @@ var controller = {
       });
     },
 	encounterType: function addEncounterType(req, res){
-      var code = req.body.code;
+      var code = req.body.code.replace("<or>", "/");
+	  console.log(code);
       var display = req.body.display;
       var definition = req.body.definition;
      
@@ -4067,7 +4068,7 @@ var controller = {
     },
 	encounterType: function updateEncounterType(req, res){
       var _id = req.params._id;
-      var code = req.body.code;
+      var code = req.body.code.replace("<or>","/");
       var display = req.body.display;
       var definition = req.body.definition;
       
